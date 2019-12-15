@@ -1,4 +1,5 @@
 Dump of assembler code for function main:
+```assembly
    0x08048501 <+0>:	push   ebp
    0x08048502 <+1>:	mov    ebp,esp
    0x08048504 <+3>:	cmp    DWORD PTR [ebp+0x8],0x1		#argc
@@ -17,8 +18,9 @@ Dump of assembler code for function main:
    0x0804852f <+46>:	mov    eax,0x0
    0x08048534 <+51>:	leave  
    0x08048535 <+52>:	ret
-
+```
 Dump of assembler code for function vuln:
+```assembly
    0x080484ab <+0>:	push   ebp
    0x080484ac <+1>:	mov    ebp,esp
    0x080484ae <+3>:	sub    esp,0x120
@@ -43,7 +45,7 @@ Dump of assembler code for function vuln:
    0x080484fa <+79>:	mov    eax,0x0
    0x080484ff <+84>:	leave  
    0x08048500 <+85>:	ret
-
+```
 looking up setjmp vulnrbilities I see:
 Calling setjmp saves the program environment into the buffer passed into the call. Later calling longjmp returns execution to the point at which setjmp was called and restores the context that was saved into the buffer. But the values of non-volatile local variables after longjmp are indeterminate. Additionally invoking longjmp from a nested signal handler is undefined, as is longjmping back to a method that has already completed execution
 
