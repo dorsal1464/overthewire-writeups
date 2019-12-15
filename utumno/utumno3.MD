@@ -2,6 +2,7 @@ ebp = 0xffffd6d8
 return address of main is stored in ebp + 4 (by stackoverflow)
 
 disas main:
+```assembly
    0x080483eb <+0>:	push   ebp
    0x080483ec <+1>:	mov    ebp,esp
    0x080483ee <+3>:	push   ebx
@@ -49,7 +50,7 @@ disas main:
    0x08048469 <+126>:	pop    ebx
    0x0804846a <+127>:	pop    ebp
    0x0804846b <+128>:	ret
-
+```
 note the line:
 0x08048426 <+59>:	xor    %eax,%ecx
 we see that each round, something gets xor'ed --> as encryption
