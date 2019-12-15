@@ -1,4 +1,4 @@
-```bash
+```sh
 dir = /tmp/ccccccccccccccccccccccccccc/tmp/abc
 
 link /tmp/ccccccccccccccccccccccccccc/tmp to etc/../narnia4
