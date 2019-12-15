@@ -1,5 +1,6 @@
 disassembly:
-0x080484db <+0>:	push   ebp
+```assembly
+   0x080484db <+0>:	push   ebp
    0x080484dc <+1>:	mov    ebp,esp
    0x080484de <+3>:	sub    esp,0x34
    0x080484e1 <+6>:	cmp    DWORD PTR [ebp+0x8],0x2		#must use at least 2 params
@@ -69,6 +70,7 @@ disassembly:
    0x080485a8 <+205>:	mov    eax,0x0
    0x080485ad <+210>:	leave  
    0x080485ae <+211>:	ret
+   ```
 
 we notice that by inserting certain values, we can overwrite unwanted memory (intended 0 to 10 addrs
 in the stack -> ebp-30 to ebp-30+40 --> ebp + (-30 to -10)
