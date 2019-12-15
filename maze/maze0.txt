@@ -59,7 +59,7 @@ Dump of assembler code for function main:
 
 file = /tmp/128ecf542a35ac5270a87dc740918404
 
-well use a technice called "race condition",
+well use a technique called "race condition",
 we try to bypass the access() by:
 creating ln -s to maze0 password
 starting /maze/maze0 (on another procces)
