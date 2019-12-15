@@ -25,8 +25,9 @@ disassembly:
    0x0804855a <+68>:	mov    eax,0x0				#so we can stackoverflow it...
    0x0804855f <+73>:	leave  
    0x08048560 <+74>:	ret
-
+```
 disassembly of hihi:						#some kind of strcpy function...
+```assembly
 0x080484db <+0>:	push   ebp
    0x080484dc <+1>:	mov    ebp,esp
    0x080484de <+3>:	sub    esp,0xc
