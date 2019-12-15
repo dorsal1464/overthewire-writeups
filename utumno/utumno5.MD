@@ -1,5 +1,6 @@
 disassembly:
-0x08048516 <+0>:	push   ebp
+```assembly
+   0x08048516 <+0>:	push   ebp
    0x08048517 <+1>:	mov    ebp,esp
    0x08048519 <+3>:	cmp    DWORD PTR [ebp+0x8],0x0		#we need to change argc to 0
    0x0804851d <+7>:	je     0x8048533 <main+29>
@@ -49,7 +50,7 @@ disassembly of hihi:						#some kind of strcpy function...
    0x08048513 <+56>:	nop
    0x08048514 <+57>:	leave  
    0x08048515 <+58>:	ret 
-
+```
 (very much like utumno2)
 using an external exec file...
 so we try a few argv... we try and get: seg fault! for:
