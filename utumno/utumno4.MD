@@ -1,4 +1,5 @@
 Dump of assembler code for function main:
+```assembly
    0x0804844b <+0>:	push   ebp
    0x0804844c <+1>:	mov    ebp,esp
    0x0804844e <+3>:	sub    esp,0xff04
@@ -28,7 +29,7 @@ Dump of assembler code for function main:
    0x08048499 <+78>:	mov    eax,0x0
    0x0804849e <+83>:	leave  
    0x0804849f <+84>:	ret
-
+```
 note:
 0x0804846f <+36>:	cmp    WORD PTR [ebp-0x6],0x3f
 we compare only the lower half of memory!
