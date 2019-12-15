@@ -6,6 +6,7 @@ upon run, we get: ./level4 ev0lcmds!
 workaround:
 run info file --> get entry point 0x8048060
 run x/64i 0x8048060:
+```assembly
    0x8048060 <_start>:		pop    eax			#has num. of env
    0x8048061 <_start+1>:	dec    eax			#decrease it...
    0x8048062 <_start+2>:	jne    0x8048096 <fine>		#jump if num. of env != 1... to fine
@@ -27,7 +28,9 @@ run x/64i 0x8048060:
    0x804808d <_start+45>:	int    0x80
    0x804808f <_start+47>:	mov    eax,0x1
    0x8048094 <_start+52>:	int    0x80
+```
 fine label:
+```assembly
    0x8048096 <fine>:	pop    eax				#eax = env[0]
    0x8048097 <fine+1>:	mov    eax,0x7d				#eax = 125
    0x804809c <fine+6>:	mov    ebx,0x8048060			#addr of _start
@@ -39,12 +42,16 @@ fine label:
    0x80480b9 <fine+35>:	mov    edi,esi				#same
    0x80480bb <fine+37>:	mov    ecx,0x2c				
    0x80480c0 <fine+42>:	mov    edx,0x12345678
+```
 l1 label:
+```assembly
    0x80480c5 <l1>:	lods   eax,DWORD PTR ds:[esi]		#load from memory *d1 & esi+=4
    0x80480c6 <l1+1>:	xor    eax,edx				#xor -> decrypt with 12345678
    0x80480c8 <l1+3>:	stos   DWORD PTR es:[edi],eax		#writes to *d1 eax & edi+=4
    0x80480c9 <l1+4>:	loop   0x80480c5 <l1>			#should loop 44 times, ecx = 44
+```
 d1 label:
+```assembly
    0x80480cb <d1>:	and    bh,dl				#all of this is encrypted shit
    0x80480cd <d1+2>:	or     al,0xcc				
    0x80480cf <d1+4>:	mov    eax,0x61672761			
@@ -63,11 +70,13 @@ d1 label:
    0x80480f4 <d1+41>:	.byte 0x15
    0x80480f5 <d1+42>:	stc    
    0x80480f6 <d1+43>:	xchg   edx,eax
+```
 
 
 l1 decrypts all d1 label instructions! then d1 is activated...
 
 l1 decrypted:
+```assembly
    0x80480cb <d1>:	pop    eax				#pointer to env[0]
    0x80480cc <d1+1>:	cmp    DWORD PTR [eax],0x1337c0de	#cmp env[0] to this
    0x80480d2 <d1+7>:	jne    0x80480ed <d1+34>		#if not equal, jump to what i guess is exit
@@ -86,6 +95,7 @@ l1 decrypted:
    0x80480f2 <d1+39>:	xor    ebx,ebx
    0x80480f4 <d1+41>:	inc    ebx
    0x80480f5 <d1+42>:	int    0x80
+```
 
 looking at this line tells it all: cmp    DWORD PTR [eax],0x1337c0de
 so we change our variable...
