@@ -7,7 +7,7 @@ we see call *%eax --> executing our code from shellcode.txt
 writing in c, it says: write your own shellcode
 we dig in and see that if we use 0x0b in our code it says: write your own 
 shellcode, so we have to write in assembly:
-
+```assembly
 [SECTION .text]
 
 global _start
@@ -36,10 +36,12 @@ printmsg:
 getmsg:
     call printmsg
     db 'HelloKitty', '$'
-
+```
 we compile that asm:
+```sh
 nasm -f elf kitty.asm -o kitty.o
 ld -m elf_i386 kitty.o -o kitty
+```
 
 we try that, but still get write your own shellcode
 so we cat it and see additional information about the run env that we dont 
