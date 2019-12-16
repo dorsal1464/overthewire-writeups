@@ -1,4 +1,5 @@
 Dump of assembler code for function main:
+```assembly
    0x080485e7 <+0>:     push   ebp
    0x080485e8 <+1>:     mov    ebp,esp
    0x080485ea <+3>:     sub    esp,0x14
@@ -72,8 +73,10 @@ Dump of assembler code for function main:
    0x080486d1 <+234>:   mov    eax,0x0
    0x080486d6 <+239>:   leave  
    0x080486d7 <+240>:   ret
+```
 
 Dump of assembler code for function foo:
+```assembly
    0x0804853b <+0>:     push   ebp
    0x0804853c <+1>:     mov    ebp,esp
    0x0804853e <+3>:     sub    esp,0x14
@@ -134,6 +137,7 @@ Dump of assembler code for function foo:
    0x080485e0 <+165>:   mov    eax,0x1
    0x080485e5 <+170>:   leave  
    0x080485e6 <+171>:   ret
+```
 
 ptrace(PTRACE_TRACEME, 0, 0):
 looking at the documentation:
@@ -142,6 +146,7 @@ PTRACE_TRACEME
               process probably shouldn't make this request if its parent
               isn't expecting to trace it.  (pid, addr, and data are
               ignored.)
+              
 so using this command, the program asks for its parent (debugging program) to trace it,
 of course gdb doesnt expect that, so ptrace returns with error, then the program knows that
 its being run by a debugging program... and exits!
@@ -149,11 +154,13 @@ so, we see that the program has anti-debugging feature: if it sees that its call
 another program, it stops itself, hence anti-debugging.
 we find a solution online: https://gist.github.com/poxyran/71a993d292eee10e95b4ff87066ea8f2
 
+```gdb
 catch syscall ptrace
 commands 1
 set ($eax) = 0
 continue
 end
+```
 
 OK, it seems like the program encodes our username with some sort of increamental shifted alphabet code, which looks like this: cipher[i] = 'A' + key[i] - username[i] - 2i
 where key = "printlol"
@@ -194,8 +201,10 @@ so set "ppehlbc^" as the password!
 it worked!
 
 we get:
+```sh
 $ cat /etc/maze_pass/maze6
 epheghuoli
+```
 
 that was a tough one...
 
