@@ -1,4 +1,5 @@
-0x0804855b <+0>:     push   ebp
+   ```assembly
+   0x0804855b <+0>:     push   ebp
    0x0804855c <+1>:     mov    ebp,esp
    0x0804855e <+3>:     sub    esp,0x104
    0x08048564 <+9>:     cmp    DWORD PTR [ebp+0x8],0x3		#env = 3 paras
@@ -55,6 +56,7 @@
    0x0804860b <+176>:   add    esp,0x10
    0x0804860e <+179>:   push   0x0
    0x08048610 <+181>:   call   0x80483f0 <exit@plt>
+```
 
 at main+108, we see unsafe strcpy, so we can use this to our advantage...
 
@@ -91,5 +93,6 @@ source for exploit:
 https://translate.googleusercontent.com/translate_c?depth=1&hl=iw&rurl=translate.google.com&sl=zh-CN&sp=nmt4&tl=en&u=http://www.ouah.org/fsp-overflows.txt&xid=17259,15700023,15700186,15700190,15700256,15700259,15700262,15700265,15700271,15700283&usg=ALkJrhh3FhEPYOVx2j7xMX-iZsIs6vnMSQ
 
 we want to override the FILE struct, and use it to write shell code...
+[in progress]
 
 
