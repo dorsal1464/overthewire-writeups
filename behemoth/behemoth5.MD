@@ -11,7 +11,7 @@ strace behemoth5
 we see that the socket sends using SOCK_DGRAM (udp) to 127.0.0.1 at port 1337
 
 and so we write a python script:
-
+```python
 import socket
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -22,7 +22,7 @@ with open("a.txt", 'wb') as f:
 	msg, addr = s.recvfrom(1024)
 	f.write(msg)
 	f.close()
-
+```
 now we just execute in parallel using: python exploit.py &
 we hit /behemoth/behemoth5
 
